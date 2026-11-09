@@ -4,7 +4,7 @@ services:
     runtime: node
     plan: free
     region: oregon
-    branch: main
+    branch: percolator-tech-site
     rootDir: percolator-tech
     autoDeploy: true
     buildCommand: npm install --omit=dev
