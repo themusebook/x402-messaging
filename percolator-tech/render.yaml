@@ -1,0 +1,24 @@
+services:
+  - type: web
+    name: percolator-tech
+    runtime: node
+    plan: free
+    region: oregon
+    branch: main
+    rootDir: percolator-tech
+    autoDeploy: true
+    buildCommand: npm install --omit=dev
+    startCommand: node server.js
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_VERSION
+        value: "20"
+      - key: MARKETS_URL
+        value: https://percolator.clawdchain.trade/api/markets
+      - key: IP_HASH_SALT
+        generateValue: true
+      - key: REDIS_URL
+        fromService:
+          name: percolator-tech-kv
+          type: keyvalue
+          property: connectionString
