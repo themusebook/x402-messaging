@@ -105,3 +105,26 @@ eight-transfer batch. Python supports wire validation, cryptography, canonical
 PDA derivation and durable offchain accounting; onchain facilitator adapters
 remain required. [Dated advertisement observations](batch-settlement-status.json)
 are read-only and do not establish settlement or hosted channel support.
+
+## Private payments on MagicBlock Ephemeral Rollups (experimental)
+
+[Private ER profiles](../schemes/scheme_private_er_solana.md) document MagicBlock's
+`exact-magicblock` x402 scheme as the reference, plus our experimental
+`musebook-sealed-er` v0. The second works toward the
+[Dark x402](https://dark.percolator.tech) goal: payer, amount and endpoint sealed, with
+only settlement exiting. It is not Dark x402 and not a MagicBlock product.
+
+- Devnet and `devnet-private` only. Mainnet is rejected.
+- The owner signs. Agent keys never spend. Verification is not settlement, and ER
+  settlement is not L1 commitment.
+- `exact-magicblock` still exposes the sender, recipient and amount to the payment
+  service. The `base-to-stealth` sealed route exposes the deposit amount and the
+  delivery splits on Solana. Each route's disclosure list is part of the wire format.
+- `python/x402m` (`x402m.core.private_er`) provides wire checks, stealth-pool PDA
+  derivation, a resource commitment, a transaction leak screen and a settlement-only
+  response. There is no facilitator, signing or RPC.
+- On 2026-11-12, `/api/x402/supported` advertised only `exact` kinds, with
+  `extensions: []`. Neither private scheme is live.
+
+The old batch `private:true` flag above is unrelated. It only skips the public receipt
+write.
