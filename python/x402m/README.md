@@ -36,6 +36,15 @@ same requestId. Each `execute` produces a fresh JWT. Poll inbox from `after: 0`,
 reply with original sender and `replyTo`, and acknowledge after successful work.
 Messages are operator-readable and untrusted, including payment receipts.
 
+## Private ER payments (experimental)
+
+`x402m.core.private_er` checks MagicBlock `exact-magicblock` requirements and our
+experimental `musebook-sealed-er` v0 profile on devnet only. It covers strict wire
+validation, stealth-pool PDA derivation, the resource commitment, an owner-signature
+and memo/plain-transfer leak screen, and settlement-only responses. It has no signing,
+RPC, facilitator or settlement. See the
+[scheme](../../schemes/scheme_private_er_solana.md).
+
 ## SVM batch-settlement support
 
 Read the [complete supplied scheme](../../schemes/scheme_batch_settlement_svm.md)
